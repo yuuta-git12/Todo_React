@@ -3,8 +3,8 @@ import './App.css'
 
 export const Todo = () => {
   const [todoText, setTodoText] = useState("");
-  const [incompleteTodos, setIncompleteTodos] = useState(["TODOです1","TODOです2"]);
-  const [completeTodos, setCompleteTodos] = useState(["TODOでした1","TODOでした2"]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
+  const [completeTodos, setCompleteTodos] = useState([]);
   
 
   // テキストフォームに値を入力した場合の処理
@@ -36,6 +36,15 @@ export const Todo = () => {
 
   }
 
+  const onClickBack = (index) => {
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index,1);
+
+    const newIncompleteTodos = [...incompleteTodos,completeTodos[index]];
+    setCompleteTodos(newCompleteTodos);
+    setIncompleteTodos(newIncompleteTodos);
+  }
+
   return (
     <>
       <div className='input-area'>
@@ -61,11 +70,11 @@ export const Todo = () => {
       <div className='complete-area'>
         <p className='title'>完了のTODO</p>
           <ul>
-            {completeTodos.map((todo) => (
+            {completeTodos.map((todo,index) => (
               <li key={todo}>
                 <div className='list-row'>
                   <p className='todo-item'>{todo}</p>
-                  <button>戻す</button>
+                  <button onClick={() => onClickBack(index)}>戻す</button>
                 </div>
               </li>
             ))}
