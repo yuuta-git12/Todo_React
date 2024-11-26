@@ -25,6 +25,17 @@ export const Todo = () => {
     setIncompleteTodos(newTodos);
   }
 
+  const onClickComplete = (index) => {
+    const newIncompleteTodos = [...incompleteTodos];
+    newIncompleteTodos.splice(index,1);
+    
+    const newCompleteTodos = [...completeTodos,incompleteTodos[index]];
+
+    setIncompleteTodos(newIncompleteTodos);
+    setCompleteTodos(newCompleteTodos);
+
+  }
+
   return (
     <>
       <div className='input-area'>
@@ -39,7 +50,7 @@ export const Todo = () => {
               <li key={todo}>
                 <div className='list-row'>
                   <p className='todo-item'>{todo}</p>
-                  <button>完了</button>
+                  <button onClick={() => onClickComplete(index)}>完了</button>
                   {/* 新しくアロー関数を定義する書き方にしないと読み込みのたびにonClickDeleteが実行される */}
                   <button onClick={() => onClickDelete(index)}>削除</button>
                 </div>
